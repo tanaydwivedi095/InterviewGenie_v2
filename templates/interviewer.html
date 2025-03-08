@@ -1,0 +1,123 @@
+{% extends "base.html"%}
+
+{% block title %}
+    Interviewer
+{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #222;
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin: 12px 0 6px;
+            text-align: left;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #0056b3;
+            box-shadow: 0 0 6px rgba(0, 86, 179, 0.4);
+        }
+
+        #paid_fields {
+            display: none;
+            background: #eef5ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #0056b3;
+            border: none;
+            color: white;
+            font-size: 17px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .submit-btn:hover {
+            background-color: #003d80;
+        }
+    </style>
+
+    <div class="container">
+        <h1>Interviewer: {{ username }}!</h1>
+        <form action="/interviewer" method="POST">
+            <input type="hidden" name="username" value="{{ username }}"> <!-- Keep username -->
+
+            <label for="model_type">Select the model type:</label>
+            <select name="model_type" id="model_type" onchange="togglePaidFields()">
+                <option value="free" {% if model_type=="free" %}selected{% endif %}>Free Model</option>
+                <option value="paid" {% if model_type=="paid" %}selected{% endif %}>Paid Model</option>
+            </select>
+
+            <div id="paid_fields">
+                <label for="api_key">Enter the API key:</label>
+                <input type="text" name="api_key" id="api_key">
+
+                <label for="difficulty">Enter the difficulty level (out of 10):</label>
+                <input type="text" name="difficulty" id="difficulty">
+            </div>
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function togglePaidFields() {
+            var modelType = document.getElementById("model_type").value;
+            var paidFields = document.getElementById("paid_fields");
+
+            if (modelType === "paid") {
+                paidFields.style.display = "block";
+            } else {
+                paidFields.style.display = "none";
+            }
+        }
+
+        // Ensure correct state on page load
+        window.onload = function() {
+            togglePaidFields();
+        };
+    </script>
+{% endblock %}

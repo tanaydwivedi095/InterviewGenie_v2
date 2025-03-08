@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Interviewee
+{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #222;
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin: 12px 0 6px;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #0056b3;
+            box-shadow: 0 0 6px rgba(0, 86, 179, 0.4);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #0056b3;
+            border: none;
+            color: white;
+            font-size: 17px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .submit-btn:hover {
+            background-color: #003d80;
+        }
+
+        .answer-box {
+            background: #eef5ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
+
+    <div class="container">
+        <h1>Interviewee: {{ username }}</h1>
+        <form action="" method="POST">
+            <label for="query">Enter your query:</label>
+            <input type="text" id="query" name="query" required>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+
+        {% if answer %}
+            <div class="answer-box">
+                <p><strong>The answer is:</strong></p>
+                <p>{{ answer }}</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

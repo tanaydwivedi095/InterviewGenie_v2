@@ -1,0 +1,11 @@
+PyMuPDF
+pandas
+torch
+dataclasses
+tqdm
+spacy
+sentence_transformers
+transformers
+openai
+flask
+-e .

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Question Sheet
+{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+            width: 500px;
+            text-align: center;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        h1 {
+            color: #222;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #333;
+            font-weight: bold;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: all 0.3s ease-in-out;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #0056b3;
+            box-shadow: 0 0 6px rgba(0, 86, 179, 0.4);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #0056b3;
+            border: none;
+            color: white;
+            font-size: 17px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #003d80;
+        }
+    </style>
+
+    <div class="container">
+        <h1>Answer the following questions:</h1>
+        <form action="/submit_answer" method="POST">
+            <input type="hidden" name="username" value="{{ username }}">  <!-- Store username -->
+            <input type="hidden" name="model_type" value="{{ model_type }}">
+            <input type="hidden" name="api_key" value="{{ api_key }}">
+            <input type="hidden" name="difficulty" value="{{ difficulty }}">
+
+            {% for question in questions.split("#") %}
+                <p>{{ question }}</p>
+                <input type="hidden" name="question_{{ loop.index0 }}" value="{{ question }}" />
+                <textarea name="answer_{{ loop.index0 }}" rows="4" required></textarea>
+            {% endfor %}
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+{% endblock %}
